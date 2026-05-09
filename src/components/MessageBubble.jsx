@@ -857,7 +857,7 @@ function CodeBlock({ language = 'text', code = '' }) {
         }}
       >
         <div className="flex min-w-0 items-center gap-2.5">
-          <CodeBracketIcon className="h-4.5 w-4.5 shrink-0 text-white/80" />
+          <CodeBracketIcon className="h-[18px] w-[18px] shrink-0 text-white/80" />
 
           <span className="truncate text-sm font-semibold text-white">
             {formatLanguage(normalizedLanguage)}
@@ -872,7 +872,7 @@ function CodeBlock({ language = 'text', code = '' }) {
             title="Copy code"
             className="grid h-8 w-8 place-items-center rounded-lg transition hover:bg-white/10 hover:text-white"
           >
-            <ClipboardDocumentIcon className="h-4.5 w-4.5" />
+            <ClipboardDocumentIcon className="h-[18px] w-[18px]" />
           </button>
 
           <button
@@ -882,7 +882,7 @@ function CodeBlock({ language = 'text', code = '' }) {
             title="Open code"
             className="grid h-8 w-8 place-items-center rounded-lg transition hover:bg-white/10 hover:text-white"
           >
-            <ArrowsPointingOutIcon className="h-4.5 w-4.5" />
+            <ArrowsPointingOutIcon className="h-[18px] w-[18px]" />
           </button>
 
           <button
@@ -892,7 +892,7 @@ function CodeBlock({ language = 'text', code = '' }) {
             title="Run code"
             className="grid h-8 w-8 place-items-center rounded-full bg-white/8 transition hover:bg-white/14 hover:text-white"
           >
-            <PlayIcon className="h-4.5 w-4.5 translate-x-px" />
+            <PlayIcon className="h-[18px] w-[18px] translate-x-px" />
           </button>
         </div>
       </div>
@@ -942,7 +942,7 @@ function MessageActions({ message }) {
         onClick={() => copyText(message)}
         className="grid h-7 w-7 place-items-center rounded-lg transition hover:bg-white/10 hover:text-white"
       >
-        <ClipboardDocumentIcon className="h-4.5 w-4.5" />
+        <ClipboardDocumentIcon className="h-[18px] w-[18px]" />
       </button>
 
       <button
@@ -950,7 +950,7 @@ function MessageActions({ message }) {
         aria-label="Like message"
         className="grid h-7 w-7 place-items-center rounded-lg transition hover:bg-white/10 hover:text-white"
       >
-        <HandThumbUpIcon className="h-4.5 w-4.5" />
+        <HandThumbUpIcon className="h-[18px] w-[18px]" />
       </button>
 
       <button
@@ -958,7 +958,7 @@ function MessageActions({ message }) {
         aria-label="Dislike message"
         className="grid h-7 w-7 place-items-center rounded-lg transition hover:bg-white/10 hover:text-white"
       >
-        <HandThumbDownIcon className="h-4.5 w-4.5" />
+        <HandThumbDownIcon className="h-[18px] w-[18px]" />
       </button>
 
       <button
@@ -966,7 +966,7 @@ function MessageActions({ message }) {
         aria-label="Share message"
         className="grid h-7 w-7 place-items-center rounded-lg transition hover:bg-white/10 hover:text-white"
       >
-        <ArrowUpTrayIcon className="h-4.5 w-4.5" />
+        <ArrowUpTrayIcon className="h-[18px] w-[18px]" />
       </button>
 
       <button
@@ -974,7 +974,7 @@ function MessageActions({ message }) {
         aria-label="Regenerate message"
         className="grid h-7 w-7 place-items-center rounded-lg transition hover:bg-white/10 hover:text-white"
       >
-        <ArrowPathIcon className="h-4.5 w-4.5" />
+        <ArrowPathIcon className="h-[18px] w-[18px]" />
       </button>
 
       <button
@@ -1079,8 +1079,8 @@ export default function MessageBubble({ message, isUser = false }) {
   return (
     <div
       className={clsx(
-        'flex w-full items-start gap-2.5 sm:gap-3',
-        isUser ? 'justify-end' : 'justify-start'
+        'flex w-full items-start',
+        isUser ? 'justify-end gap-2' : 'justify-start gap-2.5 sm:gap-3'
       )}
     >
       {!isUser && (
@@ -1095,7 +1095,7 @@ export default function MessageBubble({ message, isUser = false }) {
           isUser ? 'items-end' : 'items-start'
         )}
         style={{
-          maxWidth: isUser ? 'min(82%, 680px)' : 'min(86%, 860px)',
+          maxWidth: isUser ? 'min(78%, 640px)' : 'min(86%, 860px)',
         }}
       >
         <div
@@ -1113,12 +1113,12 @@ export default function MessageBubble({ message, isUser = false }) {
           }}
         >
           {!isUser && (
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/15 to-transparent" />
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
           )}
 
           {isUser ? (
             <p
-              className="m-0 whitespace-pre-wrap wrap-break-word"
+              className="m-0 whitespace-pre-wrap break-words"
               style={{ lineHeight: '20px' }}
             >
               {message}
