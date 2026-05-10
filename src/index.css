@@ -65,7 +65,8 @@ body {
   min-height: 100vh;
   min-height: 100dvh;
   overflow: hidden;
-  overscroll-behavior-y: none;
+  overscroll-behavior: none;
+  touch-action: manipulation;
   font-family: var(--font-sans);
   font-size: var(--font-size-base);
   line-height: var(--line-height-base);
@@ -79,7 +80,9 @@ body {
 }
 
 #root {
+  min-height: 100vh;
   min-height: 100dvh;
+  overflow: hidden;
 }
 
 /* === Typography === */
@@ -186,6 +189,13 @@ textarea {
   font-family: inherit;
 }
 
+/* Prevent iOS zoom on input focus */
+input,
+textarea,
+select {
+  font-size: 16px;
+}
+
 img,
 svg,
 video,
@@ -205,6 +215,13 @@ object {
   height: 100dvh;
 }
 
+/* Better mobile viewport support */
+.mobile-screen {
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
 /* Utility: hide scrollbar but keep scrolling functional */
 .hide-scrollbar {
   scrollbar-width: none;
@@ -213,4 +230,17 @@ object {
 
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+/* Remove browser default textarea UI quirks */
+textarea {
+  resize: none;
+}
+
+/* Better tap highlight on mobile */
+button,
+a,
+textarea,
+input {
+  -webkit-tap-highlight-color: transparent;
 }
