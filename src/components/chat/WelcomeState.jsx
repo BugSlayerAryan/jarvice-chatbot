@@ -90,7 +90,7 @@ export default function WelcomeState({ keyboardOpen = false }) {
         className={[
           'relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center text-center transition-all duration-200',
           keyboardOpen
-            ? 'translate-y-0'
+            ? '-translate-y-6'
             : '-translate-y-8 sm:-translate-y-6 md:-translate-y-8 lg:-translate-y-10',
         ].join(' ')}
       >
@@ -114,7 +114,7 @@ export default function WelcomeState({ keyboardOpen = false }) {
           className={[
             'mx-auto font-semibold leading-[1.08] tracking-tight text-white transition-all duration-200',
             keyboardOpen
-              ? '-mt-2 max-w-[300px] text-[30px]'
+              ? '-mt-3 max-w-[330px] text-[34px]'
               : '-mt-3 max-w-[330px] text-[34px] sm:max-w-2xl sm:text-5xl md:-mt-4 md:text-6xl lg:-mt-5 lg:text-[56px]',
           ].join(' ')}
         >
