@@ -799,6 +799,350 @@
 
 
 
+// import React, { useState } from 'react';
+// import clsx from 'clsx';
+// import ReactMarkdown from 'react-markdown';
+// import remarkGfm from 'remark-gfm';
+// import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+// import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+// import {
+//   ArrowPathIcon,
+//   ArrowUpTrayIcon,
+//   ArrowsPointingOutIcon,
+//   ClipboardDocumentIcon,
+//   CodeBracketIcon,
+//   EllipsisHorizontalIcon,
+//   HandThumbDownIcon,
+//   HandThumbUpIcon,
+//   PlayIcon,
+// } from '@heroicons/react/24/outline';
+// import {
+//   formatLanguage,
+//   OpenCodeViewer,
+//   runCodePreview,
+// } from '../utils/openCodeViewer';
+
+// function copyText(text) {
+//   navigator.clipboard?.writeText(text);
+// }
+
+// function CodeBlock({ language = 'text', code = '' }) {
+//   const [copied, setCopied] = useState(false);
+//   const normalizedLanguage = language.toLowerCase();
+
+//   const handleCopy = async () => {
+//     await navigator.clipboard?.writeText(code);
+//     setCopied(true);
+
+//     setTimeout(() => {
+//       setCopied(false);
+//     }, 1200);
+//   };
+
+//   const handleZoom = () => {
+//     OpenCodeViewer(code, normalizedLanguage);
+//   };
+
+//   const handleRun = () => {
+//     runCodePreview(code, normalizedLanguage);
+//   };
+
+//   return (
+//     <div className="my-4 max-w-full overflow-hidden rounded-2xl border border-white/10 bg-[#0b1020] shadow-lg shadow-black/25">
+//       <div
+//         className="flex h-12 items-center justify-between border-b border-white/10 bg-[#111827]"
+//         style={{
+//           paddingLeft: 'clamp(14px, 3vw, 22px)',
+//           paddingRight: 'clamp(10px, 2vw, 14px)',
+//         }}
+//       >
+//         <div className="flex min-w-0 items-center gap-2.5">
+//           <CodeBracketIcon className="h-4.5 w-4.5 shrink-0 text-white/80" />
+
+//           <span className="truncate text-sm font-semibold text-white">
+//             {formatLanguage(normalizedLanguage)}
+//           </span>
+//         </div>
+
+//         <div className="flex shrink-0 items-center gap-1 text-white/70 sm:gap-1.5">
+//           <button
+//             type="button"
+//             onClick={handleCopy}
+//             aria-label="Copy code"
+//             title="Copy code"
+//             className="grid h-8 w-8 place-items-center rounded-lg transition hover:bg-white/10 hover:text-white"
+//           >
+//             <ClipboardDocumentIcon className="h-4.5 w-4.5" />
+//           </button>
+
+//           <button
+//             type="button"
+//             onClick={handleZoom}
+//             aria-label="Open code"
+//             title="Open code"
+//             className="grid h-8 w-8 place-items-center rounded-lg transition hover:bg-white/10 hover:text-white"
+//           >
+//             <ArrowsPointingOutIcon className="h-4.5 w-4.5" />
+//           </button>
+
+//           <button
+//             type="button"
+//             onClick={handleRun}
+//             aria-label="Run code"
+//             title="Run code"
+//             className="grid h-8 w-8 place-items-center rounded-full bg-white/8 transition hover:bg-white/14 hover:text-white"
+//           >
+//             <PlayIcon className="h-4.5 w-4.5 translate-x-px" />
+//           </button>
+//         </div>
+//       </div>
+
+//       {copied && (
+//         <div className="border-b border-white/10 bg-emerald-500/10 px-4 py-2 text-xs font-medium text-emerald-300">
+//           Copied code
+//         </div>
+//       )}
+
+//       <div className="max-w-full overflow-x-auto">
+//         <SyntaxHighlighter
+//           language={normalizedLanguage}
+//           style={vscDarkPlus}
+//           customStyle={{
+//             margin: 0,
+//             padding: 'clamp(14px, 3vw, 18px)',
+//             background: '#0b1020',
+//             fontSize: '14px',
+//             lineHeight: '1.65',
+//             minWidth: '100%',
+//           }}
+//           codeTagProps={{
+//             style: {
+//               fontFamily:
+//                 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+//             },
+//           }}
+//           wrapLongLines={false}
+//         >
+//           {code}
+//         </SyntaxHighlighter>
+//       </div>
+//     </div>
+//   );
+// }
+
+// function MessageActions({ message }) {
+//   return (
+//     <div
+//       className="flex items-center gap-1 text-white/55"
+//       style={{ marginTop: '8px' }}
+//     >
+//       <button
+//         type="button"
+//         aria-label="Copy message"
+//         onClick={() => copyText(message)}
+//         className="grid h-7 w-7 place-items-center rounded-lg transition hover:bg-white/10 hover:text-white"
+//       >
+//         <ClipboardDocumentIcon className="h-4.5 w-4.5" />
+//       </button>
+
+//       <button
+//         type="button"
+//         aria-label="Like message"
+//         className="grid h-7 w-7 place-items-center rounded-lg transition hover:bg-white/10 hover:text-white"
+//       >
+//         <HandThumbUpIcon className="h-4.5 w-4.5" />
+//       </button>
+
+//       <button
+//         type="button"
+//         aria-label="Dislike message"
+//         className="grid h-7 w-7 place-items-center rounded-lg transition hover:bg-white/10 hover:text-white"
+//       >
+//         <HandThumbDownIcon className="h-4.5 w-4.5" />
+//       </button>
+
+//       <button
+//         type="button"
+//         aria-label="Share message"
+//         className="grid h-7 w-7 place-items-center rounded-lg transition hover:bg-white/10 hover:text-white"
+//       >
+//         <ArrowUpTrayIcon className="h-4.5 w-4.5" />
+//       </button>
+
+//       <button
+//         type="button"
+//         aria-label="Regenerate message"
+//         className="grid h-7 w-7 place-items-center rounded-lg transition hover:bg-white/10 hover:text-white"
+//       >
+//         <ArrowPathIcon className="h-4.5 w-4.5" />
+//       </button>
+
+//       <button
+//         type="button"
+//         aria-label="More options"
+//         className="grid h-7 w-7 place-items-center rounded-lg transition hover:bg-white/10 hover:text-white"
+//       >
+//         <EllipsisHorizontalIcon className="h-5 w-5" />
+//       </button>
+//     </div>
+//   );
+// }
+
+// function MarkdownMessage({ message }) {
+//   return (
+//     <ReactMarkdown
+//       remarkPlugins={[remarkGfm]}
+//       components={{
+//         h1({ children }) {
+//           return (
+//             <h1 className="mb-4 text-[28px] font-semibold leading-tight tracking-[-0.04em] text-white sm:text-[36px] md:text-[42px]">
+//               {children}
+//             </h1>
+//           );
+//         },
+
+//         h2({ children }) {
+//           return (
+//             <h2 className="mb-3 mt-5 text-[21px] font-semibold leading-tight text-white sm:text-[24px]">
+//               {children}
+//             </h2>
+//           );
+//         },
+
+//         h3({ children }) {
+//           return (
+//             <h3 className="mb-2 mt-4 text-[18px] font-semibold leading-snug text-white sm:text-[20px]">
+//               {children}
+//             </h3>
+//           );
+//         },
+
+//         p({ children }) {
+//           return (
+//             <p className="my-3 first:mt-0 last:mb-0 text-[15px] leading-7 text-slate-100">
+//               {children}
+//             </p>
+//           );
+//         },
+
+//         strong({ children }) {
+//           return (
+//             <strong className="font-semibold text-white">
+//               {children}
+//             </strong>
+//           );
+//         },
+
+//         ul({ children }) {
+//           return (
+//             <ul className="my-3 list-disc space-y-1 pl-5 text-[15px] leading-7">
+//               {children}
+//             </ul>
+//           );
+//         },
+
+//         ol({ children }) {
+//           return (
+//             <ol className="my-3 list-decimal space-y-1 pl-5 text-[15px] leading-7">
+//               {children}
+//             </ol>
+//           );
+//         },
+
+//         li({ children }) {
+//           return <li className="leading-7">{children}</li>;
+//         },
+
+//         code({ inline, className, children }) {
+//           const match = /language-(\w+)/.exec(className || '');
+//           const language = match?.[1] || 'text';
+//           const code = String(children).replace(/\n$/, '');
+
+//           if (inline) {
+//             return (
+//               <code className="rounded-md border border-white/10 bg-white/10 px-1.5 py-0.5 text-[13px] text-cyan-200">
+//                 {children}
+//               </code>
+//             );
+//           }
+
+//           return <CodeBlock language={language} code={code} />;
+//         },
+//       }}
+//     >
+//       {message}
+//     </ReactMarkdown>
+//   );
+// }
+
+// export default function MessageBubble({ message, isUser = false }) {
+//   return (
+//     <div
+//       className={clsx(
+//         'flex w-full items-start',
+//         isUser ? 'justify-end gap-2' : 'justify-start gap-2.5 sm:gap-3'
+//       )}
+//     >
+//       {!isUser && (
+//         <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 bg-[#101827] text-[10px] font-semibold text-slate-300 shadow-md shadow-black/20 sm:h-9 sm:w-9 sm:text-[11px]">
+//           AI
+//         </div>
+//       )}
+
+//       <div
+//         className={clsx(
+//           'flex min-w-0 flex-col',
+//           isUser ? 'items-end' : 'items-start'
+//         )}
+//         style={{
+//           maxWidth: isUser ? 'min(78%, 640px)' : 'min(86%, 860px)',
+//         }}
+//       >
+//         <div
+//           className={clsx(
+//             'relative min-w-0 rounded-[18px] text-[15px] shadow-md transition-all',
+//             isUser
+//               ? 'w-fit bg-[#0b84ff] text-white shadow-blue-950/20'
+//               : 'w-full border border-white/10 bg-[#151b26] text-slate-100 shadow-black/20'
+//           )}
+//           style={{
+//             padding: isUser
+//               ? '8px 14px'
+//               : 'clamp(12px, 2vw, 18px) clamp(12px, 2.5vw, 20px)',
+//             minHeight: '34px',
+//           }}
+//         >
+//           {!isUser && (
+//             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/15 to-transparent" />
+//           )}
+
+//           {isUser ? (
+//             <p
+//               className="m-0 whitespace-pre-wrap wrap-break-word"
+//               style={{ lineHeight: '20px' }}
+//             >
+//               {message}
+//             </p>
+//           ) : (
+//             <div className="prose prose-invert max-w-none prose-pre:m-0 prose-pre:bg-transparent">
+//               <MarkdownMessage message={message} />
+//             </div>
+//           )}
+//         </div>
+
+//         {!isUser && <MessageActions message={message} />}
+//       </div>
+
+//       {isUser && (
+//         <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 bg-[#101827] text-[9px] font-semibold text-slate-300 shadow-md shadow-black/20 sm:h-9 sm:w-9 sm:text-[10px]">
+//           You
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
+
+
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import ReactMarkdown from 'react-markdown';
@@ -850,29 +1194,29 @@ function CodeBlock({ language = 'text', code = '' }) {
   return (
     <div className="my-4 max-w-full overflow-hidden rounded-2xl border border-white/10 bg-[#0b1020] shadow-lg shadow-black/25">
       <div
-        className="flex h-12 items-center justify-between border-b border-white/10 bg-[#111827]"
+        className="flex h-11 items-center justify-between border-b border-white/10 bg-[#111827] sm:h-12"
         style={{
-          paddingLeft: 'clamp(14px, 3vw, 22px)',
-          paddingRight: 'clamp(10px, 2vw, 14px)',
+          paddingLeft: 'clamp(12px, 3vw, 22px)',
+          paddingRight: 'clamp(8px, 2vw, 14px)',
         }}
       >
         <div className="flex min-w-0 items-center gap-2.5">
-          <CodeBracketIcon className="h-4.5 w-4.5 shrink-0 text-white/80" />
+          <CodeBracketIcon className="h-4 w-4 shrink-0 text-white/80 sm:h-4.5 sm:w-4.5" />
 
-          <span className="truncate text-sm font-semibold text-white">
+          <span className="truncate text-[13px] font-semibold text-white sm:text-sm">
             {formatLanguage(normalizedLanguage)}
           </span>
         </div>
 
-        <div className="flex shrink-0 items-center gap-1 text-white/70 sm:gap-1.5">
+        <div className="flex shrink-0 items-center gap-0.5 text-white/70 sm:gap-1.5">
           <button
             type="button"
             onClick={handleCopy}
             aria-label="Copy code"
             title="Copy code"
-            className="grid h-8 w-8 place-items-center rounded-lg transition hover:bg-white/10 hover:text-white"
+            className="grid h-7 w-7 place-items-center rounded-lg transition hover:bg-white/10 hover:text-white sm:h-8 sm:w-8"
           >
-            <ClipboardDocumentIcon className="h-4.5 w-4.5" />
+            <ClipboardDocumentIcon className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
           </button>
 
           <button
@@ -880,9 +1224,9 @@ function CodeBlock({ language = 'text', code = '' }) {
             onClick={handleZoom}
             aria-label="Open code"
             title="Open code"
-            className="grid h-8 w-8 place-items-center rounded-lg transition hover:bg-white/10 hover:text-white"
+            className="grid h-7 w-7 place-items-center rounded-lg transition hover:bg-white/10 hover:text-white sm:h-8 sm:w-8"
           >
-            <ArrowsPointingOutIcon className="h-4.5 w-4.5" />
+            <ArrowsPointingOutIcon className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
           </button>
 
           <button
@@ -890,9 +1234,9 @@ function CodeBlock({ language = 'text', code = '' }) {
             onClick={handleRun}
             aria-label="Run code"
             title="Run code"
-            className="grid h-8 w-8 place-items-center rounded-full bg-white/8 transition hover:bg-white/14 hover:text-white"
+            className="grid h-7 w-7 place-items-center rounded-full bg-white/8 transition hover:bg-white/14 hover:text-white sm:h-8 sm:w-8"
           >
-            <PlayIcon className="h-4.5 w-4.5 translate-x-px" />
+            <PlayIcon className="h-4 w-4 translate-x-px sm:h-4.5 sm:w-4.5" />
           </button>
         </div>
       </div>
@@ -909,9 +1253,9 @@ function CodeBlock({ language = 'text', code = '' }) {
           style={vscDarkPlus}
           customStyle={{
             margin: 0,
-            padding: 'clamp(14px, 3vw, 18px)',
+            padding: 'clamp(12px, 3vw, 18px)',
             background: '#0b1020',
-            fontSize: '14px',
+            fontSize: '13px',
             lineHeight: '1.65',
             minWidth: '100%',
           }}
@@ -934,7 +1278,7 @@ function MessageActions({ message }) {
   return (
     <div
       className="flex items-center gap-1 text-white/55"
-      style={{ marginTop: '8px' }}
+      style={{ marginTop: '7px' }}
     >
       <button
         type="button"
@@ -988,6 +1332,38 @@ function MessageActions({ message }) {
   );
 }
 
+function FilePreviews({ files = [] }) {
+  if (files.length === 0) return null;
+
+  return (
+    <div className="mb-2 flex flex-wrap gap-2">
+      {files.map((item, index) => (
+        <div
+          key={`${item.name}-${index}`}
+          className="overflow-hidden rounded-xl border border-white/10 bg-black/15"
+        >
+          {item.previewUrl ? (
+            <img
+              src={item.previewUrl}
+              alt={item.name}
+              className="max-h-40 max-w-48 object-cover"
+            />
+          ) : (
+            <div className="max-w-48 px-3 py-2">
+              <p className="truncate text-xs font-medium text-white">
+                {item.name}
+              </p>
+              <p className="text-[10px] text-white/60">
+                {(item.size / 1024).toFixed(1)} KB
+              </p>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function MarkdownMessage({ message }) {
   return (
     <ReactMarkdown
@@ -995,7 +1371,7 @@ function MarkdownMessage({ message }) {
       components={{
         h1({ children }) {
           return (
-            <h1 className="mb-4 text-[28px] font-semibold leading-tight tracking-[-0.04em] text-white sm:text-[36px] md:text-[42px]">
+            <h1 className="mb-4 text-[26px] font-semibold leading-tight tracking-[-0.04em] text-white sm:text-[36px] md:text-[42px]">
               {children}
             </h1>
           );
@@ -1003,7 +1379,7 @@ function MarkdownMessage({ message }) {
 
         h2({ children }) {
           return (
-            <h2 className="mb-3 mt-5 text-[21px] font-semibold leading-tight text-white sm:text-[24px]">
+            <h2 className="mb-3 mt-5 text-[20px] font-semibold leading-tight text-white sm:text-[24px]">
               {children}
             </h2>
           );
@@ -1075,7 +1451,14 @@ function MarkdownMessage({ message }) {
   );
 }
 
-export default function MessageBubble({ message, isUser = false }) {
+export default function MessageBubble({
+  message,
+  files = [],
+  isUser = false,
+}) {
+  const isLongAssistantMessage =
+    !isUser && (message.length > 220 || message.includes('```'));
+
   return (
     <div
       className={clsx(
@@ -1095,7 +1478,11 @@ export default function MessageBubble({ message, isUser = false }) {
           isUser ? 'items-end' : 'items-start'
         )}
         style={{
-          maxWidth: isUser ? 'min(78%, 640px)' : 'min(86%, 860px)',
+          maxWidth: isUser
+            ? 'min(78%, 640px)'
+            : isLongAssistantMessage
+              ? 'min(92%, 920px)'
+              : 'min(78%, 740px)',
         }}
       >
         <div
@@ -1108,7 +1495,9 @@ export default function MessageBubble({ message, isUser = false }) {
           style={{
             padding: isUser
               ? '8px 14px'
-              : 'clamp(12px, 2vw, 18px) clamp(12px, 2.5vw, 20px)',
+              : isLongAssistantMessage
+                ? 'clamp(12px, 1.8vw, 16px) clamp(10px, 1.8vw, 16px)'
+                : 'clamp(11px, 1.8vw, 16px) clamp(12px, 2vw, 18px)',
             minHeight: '34px',
           }}
         >
@@ -1116,13 +1505,17 @@ export default function MessageBubble({ message, isUser = false }) {
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/15 to-transparent" />
           )}
 
+          <FilePreviews files={files} />
+
           {isUser ? (
-            <p
-              className="m-0 whitespace-pre-wrap wrap-break-word"
-              style={{ lineHeight: '20px' }}
-            >
-              {message}
-            </p>
+            message ? (
+              <p
+                className="m-0 whitespace-pre-wrap wrap-break-word"
+                style={{ lineHeight: '20px' }}
+              >
+                {message}
+              </p>
+            ) : null
           ) : (
             <div className="prose prose-invert max-w-none prose-pre:m-0 prose-pre:bg-transparent">
               <MarkdownMessage message={message} />

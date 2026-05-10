@@ -1,37 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Bars3Icon,
-  ArrowUpTrayIcon,
-} from '@heroicons/react/24/outline';
+import React, { useEffect, useState } from "react";
+import { Bars3Icon, ArrowUpTrayIcon } from "@heroicons/react/24/outline";
 
 export default function TopBar({ onMenuToggle = () => {} }) {
-  const [paddingRight, setPaddingRight] = useState('24px');
-  const [paddingLeft, setPaddingLeft] = useState('24px');
+  const [paddingRight, setPaddingRight] = useState("24px");
+  const [paddingLeft, setPaddingLeft] = useState("24px");
 
   useEffect(() => {
     const updatePadding = () => {
       const width = window.innerWidth;
 
       if (width < 640) {
-        setPaddingLeft('6px');
-        setPaddingRight('20px');
+        setPaddingLeft("6px");
+        setPaddingRight("20px");
       } else if (width < 1024) {
-        setPaddingLeft('24px');
-        setPaddingRight('40px');
+        setPaddingLeft("24px");
+        setPaddingRight("40px");
       } else if (width < 1280) {
-        setPaddingLeft('24px');
-        setPaddingRight('64px');
+        setPaddingLeft("24px");
+        setPaddingRight("64px");
       } else {
-        setPaddingLeft('24px');
-        setPaddingRight('80px');
+        setPaddingLeft("24px");
+        setPaddingRight("80px");
       }
     };
 
     updatePadding();
-    window.addEventListener('resize', updatePadding);
+    window.addEventListener("resize", updatePadding);
 
     return () => {
-      window.removeEventListener('resize', updatePadding);
+      window.removeEventListener("resize", updatePadding);
     };
   }, []);
 
@@ -53,7 +50,7 @@ export default function TopBar({ onMenuToggle = () => {} }) {
           <Bars3Icon className="h-5 w-5" />
         </button>
 
-        <h1 className="text-[15px] font-medium text-white/90 sm:hidden">
+        <h1 className="text-[30px] font-medium leading-none tracking-tight text-white/90 sm:hidden">
           Jarvice
         </h1>
       </div>

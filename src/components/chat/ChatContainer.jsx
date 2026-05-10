@@ -135,6 +135,118 @@
 
 
 
+// import React, { useEffect, useState } from 'react';
+// import ChatMessages from './ChatMessages';
+// import ChatInput from './ChatInput';
+// import { sendMessage } from '../../services/chatApi';
+
+// export default function ChatContainer() {
+//   const [messages, setMessages] = useState([]);
+//   const [isLoading, setIsLoading] = useState(false);
+//   const [keyboardHeight, setKeyboardHeight] = useState(0);
+
+//   useEffect(() => {
+//     const updateKeyboardHeight = () => {
+//       if (!window.visualViewport) {
+//         setKeyboardHeight(0);
+//         return;
+//       }
+
+//       const viewport = window.visualViewport;
+
+//       const nextKeyboardHeight = Math.max(
+//         0,
+//         window.innerHeight - viewport.height - viewport.offsetTop
+//       );
+
+//       setKeyboardHeight(nextKeyboardHeight);
+//     };
+
+//     updateKeyboardHeight();
+
+//     window.visualViewport?.addEventListener('resize', updateKeyboardHeight);
+//     window.visualViewport?.addEventListener('scroll', updateKeyboardHeight);
+//     window.addEventListener('resize', updateKeyboardHeight);
+
+//     return () => {
+//       window.visualViewport?.removeEventListener('resize', updateKeyboardHeight);
+//       window.visualViewport?.removeEventListener('scroll', updateKeyboardHeight);
+//       window.removeEventListener('resize', updateKeyboardHeight);
+//     };
+//   }, []);
+
+//   const handleSendMessage = async (message) => {
+//     const trimmedMessage = message.trim();
+
+//     if (!trimmedMessage || isLoading) return;
+
+//     setMessages((prev) => [
+//       ...prev,
+//       {
+//         text: trimmedMessage,
+//         sender: 'user',
+//       },
+//     ]);
+
+//     setIsLoading(true);
+
+//     try {
+//       const assistantMessage = await sendMessage(trimmedMessage);
+
+//       setMessages((prev) => [
+//         ...prev,
+//         {
+//           text: assistantMessage.content,
+//           sender: 'bot',
+//         },
+//       ]);
+//     } catch (error) {
+//       setMessages((prev) => [
+//         ...prev,
+//         {
+//           text: error.message || 'Sorry, something went wrong.',
+//           sender: 'bot',
+//         },
+//       ]);
+//     } finally {
+//       setIsLoading(false);
+//     }
+//   };
+
+//   const keyboardOpen = keyboardHeight > 80;
+
+//   return (
+//     <section className="relative flex h-[calc(100dvh-56px)] min-h-0 flex-col overflow-hidden bg-[#0b0f19] lg:h-[calc(100dvh-64px)]">
+//       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.10),transparent_34%),radial-gradient(circle_at_bottom,rgba(34,197,94,0.05),transparent_25%)]" />
+
+//       <div className="relative z-10 flex h-full min-h-0 flex-col overflow-hidden">
+//         <div className="min-h-0 flex-1 overflow-hidden">
+//           <ChatMessages
+//             messages={messages}
+//             isLoading={isLoading}
+//             onSuggestionClick={handleSendMessage}
+//             keyboardOpen={keyboardOpen}
+//             keyboardHeight={keyboardHeight}
+//           />
+//         </div>
+
+//         <ChatInput
+//           onSendMessage={handleSendMessage}
+//           isLoading={isLoading}
+//           keyboardHeight={keyboardHeight}
+//         />
+//       </div>
+//     </section>
+//   );
+// }
+
+
+
+
+
+
+
+
 import React, { useEffect, useState } from 'react';
 import ChatMessages from './ChatMessages';
 import ChatInput from './ChatInput';
@@ -146,20 +258,26 @@ export default function ChatContainer() {
   const [keyboardHeight, setKeyboardHeight] = useState(0);
 
   useEffect(() => {
+    let frameId;
+
     const updateKeyboardHeight = () => {
-      if (!window.visualViewport) {
-        setKeyboardHeight(0);
-        return;
-      }
+      cancelAnimationFrame(frameId);
 
-      const viewport = window.visualViewport;
+      frameId = requestAnimationFrame(() => {
+        if (!window.visualViewport) {
+          setKeyboardHeight(0);
+          return;
+        }
 
-      const nextKeyboardHeight = Math.max(
-        0,
-        window.innerHeight - viewport.height - viewport.offsetTop
-      );
+        const viewport = window.visualViewport;
 
-      setKeyboardHeight(nextKeyboardHeight);
+        const rawKeyboardHeight =
+          window.innerHeight - viewport.height - viewport.offsetTop;
+
+        const nextKeyboardHeight = Math.max(0, Math.round(rawKeyboardHeight));
+
+        setKeyboardHeight(nextKeyboardHeight > 80 ? nextKeyboardHeight : 0);
+      });
     };
 
     updateKeyboardHeight();
@@ -167,31 +285,36 @@ export default function ChatContainer() {
     window.visualViewport?.addEventListener('resize', updateKeyboardHeight);
     window.visualViewport?.addEventListener('scroll', updateKeyboardHeight);
     window.addEventListener('resize', updateKeyboardHeight);
+    window.addEventListener('orientationchange', updateKeyboardHeight);
 
     return () => {
+      cancelAnimationFrame(frameId);
+
       window.visualViewport?.removeEventListener('resize', updateKeyboardHeight);
       window.visualViewport?.removeEventListener('scroll', updateKeyboardHeight);
       window.removeEventListener('resize', updateKeyboardHeight);
+      window.removeEventListener('orientationchange', updateKeyboardHeight);
     };
   }, []);
 
-  const handleSendMessage = async (message) => {
+  const handleSendMessage = async (message, files = []) => {
     const trimmedMessage = message.trim();
 
-    if (!trimmedMessage || isLoading) return;
+    if ((!trimmedMessage && files.length === 0) || isLoading) return;
 
     setMessages((prev) => [
       ...prev,
       {
         text: trimmedMessage,
         sender: 'user',
+        files,
       },
     ]);
 
     setIsLoading(true);
 
     try {
-      const assistantMessage = await sendMessage(trimmedMessage);
+      const assistantMessage = await sendMessage(trimmedMessage, files);
 
       setMessages((prev) => [
         ...prev,
